@@ -1,0 +1,32 @@
+$feriado = ['2022-06-09', '2022-06-20', '2022-06-21', '2022-06-30']
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    <input type="date" name="entrada_date" id="entrada_date">
+    <input type="text" name="qnt_dias"  id="qtd_dias" placeholder="Informe a quantidade de dias: ">
+    <fieldset>
+        <legend>Selecione o tipo de dia a ser contado:</legend>
+    
+        <div>
+          <input type="radio" id="dias_corridos" name="Dias" value="dias_corridos"
+                 checked>
+          <label for="dias_corridos">Dias corridos</label>
+        </div>
+    
+        <div>
+          <input type="radio" id="dias_uteis" name="Dias" value="dias_uteis">
+          <label for="dias_uteis">Dias úteis</label>
+        </div>
+    </fieldset>
+    <input type="date" name="saida_date" id="saida_date">
+</body>
+</htm>
