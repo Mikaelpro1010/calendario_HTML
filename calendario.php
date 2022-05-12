@@ -41,27 +41,44 @@
     return year_result + "-" + month_result + "-" + day_result;
   }
 
+
+
   function novaHora() {
-    let feriado = ['2022-06-09', '2022-06-20', '2022-06-21', '2022-06-30'];
+    let feriado = ['2022-05-12', '2022-06-20', '2022-06-21', '2022-06-30'];
     let msgAlerta = document.getElementById('msgAlerta');
     let quant_days = document.getElementById('qtd_dias').value;
-    let types_of_days = document.getElementsByName('Dias').value;
+    let types_of_days_corridos = document.getElementById('dias_corridos').checked;
+    let types_of_days_uteis = document.getElementById('dias_uteis').checked;
+    console.log(types_of_days_uteis)
     let number = document.getElementById('entrada_date').value;
-    let data = new Date(number + ' 00:00:00');
-    date_saida(data);
-    let x = parseInt(quant_days);
+    if (types_of_days_corridos) {
+      if (number != "" && quant_days != "") {
+        let data = new Date(number + ' 00:00:00');
+        let x = parseInt(quant_days);
 
-    data.setDate(data.getDate() + x);
-    // for(data=0;data<feriado.length;data++){
-    //   const conteudo = feriado.includes(data);
-    //   /*if(data==indicie_feriado[i]){
-    //   msgAlerta.innerHTML = '<div class="alert alert-danger" role="alert">Encontrado final de semana, favor selecionar outra quantidade de dias!</div>';
-    //   }*/
-    // }
-    if (data.getDay() == 0 || data.getDay() == 6) {
-      msgAlerta.innerHTML = '<div class="alert alert-danger" role="alert">Encontrado final de semana, favor selecionar outra quantidade de dias!</div>';
-    } else {
-      document.getElementById("data").value = date_saida(data);
+        data.setDate(data.getDate() + x);
+
+        if (data.getDay() == 0) {
+          msgAlerta.innerHTML = '<div class="alert alert-danger" role="alert">Domingo, favor selecionar outra quantidade de dias!</div>';
+        } else if (data.getDay() == 6) {
+          msgAlerta.innerHTML = '<div class="alert alert-danger" role="alert">Sábado, favor selecionar outra quantidade de dias!</div>';
+        } else if (feriado.includes(date_saida(data))) {
+          msgAlerta.innerHTML = '<div class="alert alert-danger" role="alert">Encontrado um feriado, favor selecionar outra quantidade de dias!</div>';
+        } else {
+          document.getElementById("data").value = date_saida(data);
+        }
+      }
+    }
+
+    if(types_of_days_uteis){
+      let data = new Date(number + ' 00:00:00');
+        let x = parseInt(quant_days);
+        data.setDate(data.getDate() + x);
+      value_quo = data.setDate(data.getDate() + x)/5;
+      value_resto = data.setDate(data.getDate() + x)%5;
+        if(value_resto==0){
+          msgAlerta.innerHTML = '<div class="alert alert-danger" role="alert">Final de semana, favor selecionar outra quantidade de dias!</div>';
+        }
     }
 
   }
