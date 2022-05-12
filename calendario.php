@@ -41,10 +41,7 @@
     return year_result + "-" + month_result + "-" + day_result;
   }
 
-
-
   function novaHora() {
-
     let feriado = ['2022-06-09', '2022-06-20', '2022-06-21', '2022-06-30'];
     let msgAlerta = document.getElementById('msgAlerta');
     let quant_days = document.getElementById('qtd_dias').value;
