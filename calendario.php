@@ -43,8 +43,12 @@
 <script>
   /*funcinalidade para formatar o valor no formato padrão de datas(yyyy-mm-dd)*/
   function date_saida(data) {
+<<<<<<< HEAD
     console.log(data);
     let day_result = data.getDate();
+=======
+    let day_result = (data.getDate());
+>>>>>>> 0ec3f79d3dbc26a4adb1b7cdedd2fec1e4d0672e
     day_result = (data.getDate() <= 9) ? "0" + day_result : day_result;
     let month_result = (data.getMonth() + 1);
     month_result = ((data.getMonth() + 1) <= 9) ? "0" + month_result : month_result;
