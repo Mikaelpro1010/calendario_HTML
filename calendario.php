@@ -10,11 +10,14 @@
 </head>
 
 <body>
+  <!--funcionalidade para incrementar a data desejada-->
   <input type="date" name="entrada_date" id="entrada_date" onchange="javascript:novaHora()" />
+  <!--funcionalidade para incrementar a quantidade de dias -->
   <input type="number" name="qnt_dias" id="qtd_dias" placeholder="Informe a quantidade de dias:" onchange="javascript:novaHora()" />
   <fieldset>
     <legend>Selecione o tipo de dia a ser contado:</legend>
 
+    <!--funcionalidade para escolher entre dias úteis e dias corridos-->
     <div>
       <input type="radio" id="dias_corridos" name="Dias" value="dias_corridos" checked>
       <label for="dias_corridos">Dias corridos</label>
@@ -25,12 +28,15 @@
       <label for="dias_uteis">Dias úteis</label>
     </div>
   </fieldset>
+  <!--funcionalidade para exibir a nova data após o acréscimo de dias -->
   <input type="date" name="data" id="data" onchange="javascript:novaHora()" />
+  <!--funcionalidade para exibir mensagem de  alerta caso caia em um fim de semana ou feriado -->
   <span id="msgAlerta"></span>
 </body>
 </htm>
 
 <script>
+  /*funcinalidade para formatar o valor no formato padrão de datas(yyyy-mm-dd)*/
   function date_saida(data) {
     let day_result = (data.getDate())
     day_result = (data.getDate() <= 9) ? "0" + day_result : day_result;
@@ -42,6 +48,7 @@
   }
 
   function novaHora() {
+    /*funcionalidade para armazenar os valores recebidos pelo usário e tratálos para serem exibidos na tela do site*/
     let feriado = ['2022-05-12', '2022-06-20', '2022-06-21', '2022-06-30'];
     let msgAlerta = document.getElementById('msgAlerta');
     let quant_days = document.getElementById('qtd_dias').value;
@@ -49,13 +56,18 @@
     let types_of_days_uteis = document.getElementById('dias_uteis').checked;
     console.log(types_of_days_uteis)
     let number = document.getElementById('entrada_date').value;
+    /*condição para obrigar o código a ser executado somente se nenhum dos campos de entrada estiverem vazios*/
     if (number != "" && quant_days != "") {
+      /*condição para exibir os resultados conforme seja escolhido a contagem em forma de dias corridos*/
       if (types_of_days_corridos) {
         let data = new Date(number + ' 00:00:00');
+        /*utilizando a função parseInt para transformar a quantidade de dias em um numero inteiro*/
         let x = parseInt(quant_days);
 
+        /*cáclulo para realizar a somatoria do dia atual com a quantidade de dias desejado*/
         data.setDate(data.getDate() + x);
 
+        /*condições de aviso caso a contagem caia tanto em finais de semana quanto em feriados*/
         if (data.getDay() == 0) {
           msgAlerta.innerHTML = '<div class="alert alert-danger" role="alert">Domingo, favor selecionar outra quantidade de dias!</div>';
         } else if (data.getDay() == 6) {
@@ -65,9 +77,11 @@
         }
       }
 
+      /*condição para exibir os resultados conforme seja escolhido a contagem em forma de dias úteis*/
       if (types_of_days_uteis) {
         let data = new Date(number + ' 00:00:00');
 
+        /*laço de repetição feito para evitar que os finais de semana e os feriados sejam incuidos na contagem dos dias*/
         while (1) {
           data.setDate(data.getDate() + 1);
           quant_days -= 1;
@@ -81,6 +95,7 @@
         
       }
     }
+    /*funcionalidade para exibir a data após calculado a contagem de dias e exibida em seu formato padrão(yyyy-mm-dd)*/
     document.getElementById("data").value = date_saida(data);
   }
 </script>
