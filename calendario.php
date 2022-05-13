@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,19 +6,21 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <title>Document</title>
 
 </head>
 
 <body>
+  <div> 
   <!--funcionalidade para incrementar a data desejada-->
   <input type="date" name="entrada_date" id="entrada_date" onchange="javascript:novaHora()" />
   <!--funcionalidade para incrementar a quantidade de dias -->
   <input type="number" name="qnt_dias" id="qtd_dias" placeholder="Informe a quantidade de dias:" onchange="javascript:novaHora()" />
-  <fieldset>
-    <legend>Selecione o tipo de dia a ser contado:</legend>
-
+  <fieldset class="border border-dark">
+    <p>Selecione o tipo de dia a ser contado:</p>
     <!--funcionalidade para escolher entre dias úteis e dias corridos-->
+
     <div>
       <input type="radio" id="dias_corridos" name="Dias" value="dias_corridos" checked>
       <label for="dias_corridos">Dias corridos</label>
@@ -32,13 +35,16 @@
   <input type="date" name="data" id="data" onchange="javascript:novaHora()" />
   <!--funcionalidade para exibir mensagem de  alerta caso caia em um fim de semana ou feriado -->
   <span id="msgAlerta"></span>
+  </div>
 </body>
 </htm>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script>
   /*funcinalidade para formatar o valor no formato padrão de datas(yyyy-mm-dd)*/
   function date_saida(data) {
-    let day_result = (data.getDate())
+    console.log(data);
+    let day_result = data.getDate();
     day_result = (data.getDate() <= 9) ? "0" + day_result : day_result;
     let month_result = (data.getMonth() + 1);
     month_result = ((data.getMonth() + 1) <= 9) ? "0" + month_result : month_result;
@@ -54,13 +60,20 @@
     let quant_days = document.getElementById('qtd_dias').value;
     let types_of_days_corridos = document.getElementById('dias_corridos').checked;
     let types_of_days_uteis = document.getElementById('dias_uteis').checked;
-    console.log(types_of_days_uteis)
+    
     let number = document.getElementById('entrada_date').value;
     /*condição para obrigar o código a ser executado somente se nenhum dos campos de entrada estiverem vazios*/
     if (number != "" && quant_days != "") {
+      var data = new Date(number + ' 00:00:00');
+        if (data.getDay() == 0) {
+          msgAlerta.innerHTML = '<div class="alert alert-danger" role="alert">A data inicial não pode ser no Domingo!</div>';
+        } else if (data.getDay() == 6) {
+          msgAlerta.innerHTML = '<div class="alert alert-danger" role="alert">A data inicial não pode ser no Sábado!</div>';
+        } else if (feriado.includes(date_saida(data))) {
+          msgAlerta.innerHTML = '<div class="alert alert-danger" role="alert">Encontrado um feriado, favor selecionar outra quantidade de dias!</div>';
+        }
       /*condição para exibir os resultados conforme seja escolhido a contagem em forma de dias corridos*/
       if (types_of_days_corridos) {
-        let data = new Date(number + ' 00:00:00');
         /*utilizando a função parseInt para transformar a quantidade de dias em um numero inteiro*/
         let x = parseInt(quant_days);
 
@@ -79,8 +92,6 @@
 
       /*condição para exibir os resultados conforme seja escolhido a contagem em forma de dias úteis*/
       if (types_of_days_uteis) {
-        let data = new Date(number + ' 00:00:00');
-
         /*laço de repetição feito para evitar que os finais de semana e os feriados sejam incuidos na contagem dos dias*/
         while (1) {
           data.setDate(data.getDate() + 1);
@@ -92,10 +103,9 @@
             break;
           }
         }
-        
       }
+      /*funcionalidade para exibir a data após calculado a contagem de dias e exibida em seu formato padrão(yyyy-mm-dd)*/
+      document.getElementById("data").value = date_saida(data);
     }
-    /*funcionalidade para exibir a data após calculado a contagem de dias e exibida em seu formato padrão(yyyy-mm-dd)*/
-    document.getElementById("data").value = date_saida(data);
   }
 </script>
