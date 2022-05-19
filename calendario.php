@@ -62,6 +62,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script>
+
 	let feriado = listarFeriados();
 	/*funcinalidade para formatar o valor no formato padrão de datas(yyyy-mm-dd)*/
 	function date_saida(data) {
@@ -130,7 +131,7 @@
 		}
 	}
 	async function listarFeriados(){
-		let conteudo = await fetch('get_datas.php');
-		return conteudo.responseText;
+		let feriado = await fetch("get_datas.php");
+		return feriado;
 	}
 </script>
